@@ -1,3 +1,5 @@
-# EcoBind
+# Fortify Licensing Web Panel
 
-React, Redux & Socket.io Electronic Binder Web App
+This is a web panel built in React, Redux & Node using express.
+This panel is used for clients to manage users of there licensed .NET application.
+

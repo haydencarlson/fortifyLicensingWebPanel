@@ -17,7 +17,6 @@ module.exports = function(io) {
 		const broadcastAction = (type, payload) => io.emit('action', { type, payload });
     console.log(`Socket connected: ${socket.id}`);
 
-    socket.on('action', (action) => {
       switch (action.type) {
         case 'socket/TYPE_NEW_TAB':
         	knex('mainNavTabs')

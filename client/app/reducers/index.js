@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import exampleReducer from './exampleReducer.js';
+import registerFormToggled from './registerFormToggled.js';
 const rootReducer = combineReducers({
-  exampleReducer
+  registerFormToggled
 });
 
 export default rootReducer;

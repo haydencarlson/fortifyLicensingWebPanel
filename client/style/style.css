@@ -3,7 +3,10 @@
 }
 body {
 	background-color: #000;
-	background:url('http://www.wallpaperup.com/uploads/wallpapers/2012/10/21/20181/cad2441dd3252cf53f12154412286ba0.jpg');
+	background:url('http://i.imgur.com/qDAxhu8.png');
+	background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
 }
 .container {
 	width:100%;
@@ -30,6 +33,20 @@ body {
 }
 #login-dp .social-buttons a{
     width: 49%;
+}
+.registerDropdown {
+	margin: auto;
+  width: 300px;
+	margin-top: -63px;
+}
+.upArrowContainer {
+	display: flex;
+	cursor:pointer;
+	justify-content: center;
+}
+.upArrowIcon {
+	font-size:20px;
+	color:white;
 }
 #login-dp .form-group {
     margin-bottom: 10px;

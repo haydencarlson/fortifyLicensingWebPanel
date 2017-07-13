@@ -8,6 +8,12 @@ class RegisterForm extends Component {
     this.props.toggleRegisterForm(!formToggled);
   }
 
+  handleClick = () => {
+    this.toggleForm(this.props.registerFormToggled)
+    let dropDown = document.getElementById('loginDropdown');
+    dropDown.click();
+  }
+
   renderForm = (formToggled) => {
     if (formToggled) {
       return (
@@ -16,8 +22,8 @@ class RegisterForm extends Component {
              <div className="row">
                 <div className="col-md-12">
                    <form className="form" onSubmit={this.handleFormSubmit} acceptCharset="UTF-8" id="login-nav">
-                      <div className="form-group upArrowContainer">
-                        <i className="fa fa-arrow-up upArrowIcon" onClick={() => this.toggleForm(this.props.registerFormToggled)} aria-hidden="true"></i>
+                      <div className="form-group">
+                      <button type="submit" data-toggle="dropdown" onClick={() => this.handleClick()} className="btn btn-primary btn-block">Login</button>
                       </div>
                       <div className="form-group">
                          <label className="sr-only" htmlFor="exampleInputEmail2">Email address</label>

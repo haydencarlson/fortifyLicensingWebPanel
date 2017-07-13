@@ -14,7 +14,7 @@ class LoginForm extends Component {
         <ul className="nav navbar-nav navbar-right">
           <li><p className="navbar-text">Already have an account?</p></li>
           <li className="dropdown">
-            <a href="#" className="dropdown-toggle" data-toggle="dropdown"><b>Login</b> <span className="caret"></span></a>
+            <a href="#" className="dropdown-toggle" id="loginDropdown" data-toggle="dropdown"><b>Login</b> <span className="caret"></span></a>
       			<ul id="login-dp" className="dropdown-menu">
       				<li>
       					 <div className="row">

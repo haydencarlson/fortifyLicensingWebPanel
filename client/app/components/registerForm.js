@@ -26,14 +26,34 @@ class RegisterForm extends Component {
 
   handleFormSubmit = (e) => {
     e.preventDefault();
+    const that = this;
     if (this.state.password === this.state.password_confirmation) {
+      axios.post('http://localhost:3000/users', {
+      email: this.state.email,
+      password: this.state.password,
+      password_confirmation: this.state.password_confirmation
+      })
+      .then((response) => {
+        if (response.data.status) {
+          toast.success(response.data.message, {
+            autoClose: 4000,
+            position: 'bottom-center'
+          });
+          that.handleClick();
+        } else {
+          toast.success(response.data.message, {
+            autoClose: 4000,
+            positon: 'bottom-center'
+          });
+        }
+      }).catch((error) => console.log(error));
     } else {
       toast.success("Your passwords do not match", {autoClose: 4000});
     }
   }
 
-  handleUsernameChange = (e) => {
-    this.setState({username: e.target.value});
+  handleEmailChange = (e) => {
+    this.setState({email: e.target.value});
   }
 
   handlePasswordChange = (e) => {
@@ -56,15 +76,15 @@ class RegisterForm extends Component {
                       </div>
                       <div className="form-group">
                          <label className="sr-only" htmlFor="exampleInputEmail2">Email address</label>
-                         <input type="email" nChange={this.handleEmailChange}  className="form-control" id="exampleInputEmail2" placeholder="Email address" required/>
+                         <input type="email" onChange={this.handleEmailChange}  value={this.state.email} className="form-control" id="exampleInputEmail2" placeholder="Email address" required/>
                       </div>
                       <div className="form-group">
                          <label className="sr-only" htmlFor="exampleInputPassword2">Password</label>
-                         <input type="password" onChange={this.handlePasswordChange} className="form-control" id="exampleInputPassword2" placeholder="Password" required/>
+                         <input type="password" onChange={this.handlePasswordChange} value={this.state.password} className="form-control" id="exampleInputPassword2" placeholder="Password" required/>
                       </div>
                       <div className="form-group">
                          <label className="sr-only" htmlFor="exampleInputPassword2">Confirm Password</label>
-                         <input type="password" onChange={this.handlePasswordConfirmChange} className="form-control" id="exampleInputPassword2" placeholder="Confirm Password" required/>
+                         <input type="password" onChange={this.handlePasswordConfirmChange} value={this.state.password_confirmation} className="form-control" id="exampleInputPassword2" placeholder="Confirm Password" required/>
                       </div>
                       <div className="form-group">
                          <button type="submit" className="btn btn-primary btn-block">Register</button>

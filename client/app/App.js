@@ -10,8 +10,7 @@ class App extends Component {
   render() {
     return (
       <Router history={browserHistory}>
-      <Route path="/"/>
-      <Route path="/authorization" component={Authorization} />
+      <Route path="/" component={Authorization}/>
       </Router>
     )
   };

@@ -1,6 +1,8 @@
 const app = require('express')();
 const server = require('http').Server(app);
+const router = require('./routes.js');
 
+app.use(router);
 
 server.listen(3000, (err) => {
   if (err) { console.log(err) };

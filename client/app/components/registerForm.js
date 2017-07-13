@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../actions/index.js';
+import axios from 'axios';
+import {toast} from 'react-toastify';
 class RegisterForm extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      password_confirmation: ''
+    }
+  }
   toggleForm = (formToggled) => {
     console.log(formToggled);
     this.props.toggleRegisterForm(!formToggled);
@@ -14,6 +24,25 @@ class RegisterForm extends Component {
     dropDown.click();
   }
 
+  handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (this.state.password === this.state.password_confirmation) {
+    } else {
+      toast.success("Your passwords do not match", {autoClose: 4000});
+    }
+  }
+
+  handleUsernameChange = (e) => {
+    this.setState({username: e.target.value});
+  }
+
+  handlePasswordChange = (e) => {
+    this.setState({password: e.target.value});
+  }
+  handlePasswordConfirmChange = (e) => {
+    this.setState({password_confirmation: e.target.value});
+  }
+
   renderForm = (formToggled) => {
     if (formToggled) {
       return (
@@ -21,21 +50,21 @@ class RegisterForm extends Component {
           <li>
              <div className="row">
                 <div className="col-md-12">
-                   <form className="form" onSubmit={this.handleFormSubmit} acceptCharset="UTF-8" id="login-nav">
+                   <form className="form" onSubmit={(e) => this.handleFormSubmit(e)} acceptCharset="UTF-8" id="login-nav">
                       <div className="form-group">
                       <button type="submit" data-toggle="dropdown" onClick={() => this.handleClick()} className="btn btn-primary btn-block">Login</button>
                       </div>
                       <div className="form-group">
                          <label className="sr-only" htmlFor="exampleInputEmail2">Email address</label>
-                         <input type="email" className="form-control" id="exampleInputEmail2" placeholder="Email address" required/>
+                         <input type="email" nChange={this.handleEmailChange}  className="form-control" id="exampleInputEmail2" placeholder="Email address" required/>
                       </div>
                       <div className="form-group">
                          <label className="sr-only" htmlFor="exampleInputPassword2">Password</label>
-                         <input type="password" className="form-control" id="exampleInputPassword2" placeholder="Password" required/>
+                         <input type="password" onChange={this.handlePasswordChange} className="form-control" id="exampleInputPassword2" placeholder="Password" required/>
                       </div>
                       <div className="form-group">
                          <label className="sr-only" htmlFor="exampleInputPassword2">Confirm Password</label>
-                         <input type="password" className="form-control" id="exampleInputPassword2" placeholder="Confirm Password" required/>
+                         <input type="password" onChange={this.handlePasswordConfirmChange} className="form-control" id="exampleInputPassword2" placeholder="Confirm Password" required/>
                       </div>
                       <div className="form-group">
                          <button type="submit" className="btn btn-primary btn-block">Register</button>

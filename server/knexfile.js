@@ -8,7 +8,7 @@ module.exports = {
       host : 'localhost',
       user : 'hayden',
       password : 'a',
-      database : 'fortifyLicensing',
+      database : 'fortifylicensing',
       port: 5432,
       ssl: true
     }

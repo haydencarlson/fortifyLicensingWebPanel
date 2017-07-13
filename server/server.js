@@ -1,6 +1,7 @@
 const app = require('express')();
 const server = require('http').Server(app);
 const router = require('./routes.js');
+const bodyParser = requier('body-parser');
 
 app.use(router);
 

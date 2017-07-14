@@ -1,16 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const utils = require('./utils.js');
-const saltRounds = 10;
-var knex = require('knex')({
-  client: 'pg',
-  connection: {
-    host : '127.0.0.1',
-    user : 'hayden',
-    password : 'a',
-    database : 'fortifylicensing'
-  }
+const HandlerApi = require('./handlerApi.js');
+
+router.all('/*', (req, res, next) => {
+  var API = new HandlerApi();
+  req.API = API;
+  next();
 });
 
 router.post('/users', (req, res) => {
@@ -18,6 +13,16 @@ router.post('/users', (req, res) => {
     req.body.email,
     req.body.password,
     req.body.password_confirmation
+  ).then((result) => {
+    res.send(result);
+  });
+});
+
+router.post('/auth', (req, res) => {
+  req.API.signInUser(
+    req.body.email,
+    req.body.password,
+    req.API
   ).then((result) => {
     res.send(result);
   });

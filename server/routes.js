@@ -9,10 +9,20 @@ router.all('/*', (req, res, next) => {
 });
 
 router.post('/users', (req, res) => {
-  req.API.signInUser(
+  req.API.signUpUser(
     req.body.email,
     req.body.password,
     req.body.password_confirmation
+  ).then((result) => {
+    res.send(result);
+  });
+});
+
+router.post('/auth', (req, res) => {
+  req.API.signInUser(
+    req.body.email,
+    req.body.password,
+    req.API
   ).then((result) => {
     res.send(result);
   });

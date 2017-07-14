@@ -14,25 +14,12 @@ var knex = require('knex')({
 });
 
 router.post('/users', (req, res) => {
-
-  utils.checkIfUserAlreadyExists(req.body.email, knex, (response) => {
-    if (response.length) {
-      res.send({status: 0, message: "Email already exists"});
-    } else if (req.body.password === req.body.password_confirmation) {
-      bcrypt.hash(req.body.password, saltRounds, (err, hash) => {
-        if (err) {
-          res.send({status: 0, message: "Error creating user"});
-        }
-        knex('users').insert({ email: req.body.email, password: hash})
-        .then((response) => {
-          if (response) {
-            res.send({status: 1, message: "Account successfully created"});
-          }
-        });
-      });
-    } else {
-      res.send({status: 0, message: "Your passwords do not match"});
-    }
+  req.API.signUpUser(
+    req.body.email,
+    req.body.password,
+    req.body.password_confirmation
+  ).then((result) => {
+    res.send(result);
   });
 });
 

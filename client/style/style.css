@@ -8,6 +8,9 @@ body {
   background-attachment: fixed;
   background-position: center;
 }
+.siteTitle {
+  font-family: Oxygen;
+}
 .container {
 	width:100%;
 	padding:0;

@@ -1,6 +1,8 @@
 const utils = require('./utils.js');
 const saltRounds = 10;
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+require('dotenv').config();
 var knex = require('knex')({
   client: 'pg',
   connection: {
@@ -12,7 +14,7 @@ var knex = require('knex')({
 });
 var HandlerApi = function() {};
 
-HandlerApi.prototype.signInUser = (email, password, password_confirmation) => {
+HandlerApi.prototype.signUpUser = (email, password, password_confirmation) => {
   return new Promise(function(resolve, reject) {
     utils.checkIfUserAlreadyExists(email, knex, (response) => {
       if (response.length) {
@@ -36,22 +38,50 @@ HandlerApi.prototype.signInUser = (email, password, password_confirmation) => {
   });
 };
 
-HandlerApi.prototype.signInUser = (email, password) => {
-  return new Promise(function(resolve, reject) {
+HandlerApi.prototype.signJwt = (email) => {
+  return new Promise((resolve, reject) => {
+    let token = jwt.sign({
+      data: email,
+    }, process.env.JWT_SECRET, { expiresIn: '5h'});
+    resolve(token);
+  });
+};
+
+HandlerApi.prototype.signInUser = (email, password, API) => {
+  return new Promise((resolve, reject) => {
     utils.checkIfUserAlreadyExists(email, knex, (response) => {
       if (response.length) {
-        let passwordHash = response[0].password;
-        bcrypt.compare(password, passwordHash, function(err, res) {
-            if (res) {
-              resolve({status: 1, message: "You have been signed in"});
-            } else {
-              resolve({status: 0, message: "Email or password is incorrect"});
-            }
+        API.comparePassword(response, password).then((result) => {
+          if (result) {
+            API.signJwt(email).then((jwt) => {
+              resolve({
+                status: 1,
+                message: "You have been signed in",
+                token: jwt
+              });
+            })
+          } else {
+            resolve({status: 0, message: "Email or Password incorrect"});
+          }
         });
       } else {
         resolve({status: 0, message: "User does not exist"});
       }
     })
+  });
+};
+
+HandlerApi.prototype.comparePassword = (response, passwordInput) => {
+  return new Promise((resolve, reject) => {
+    let passwordHash = response[0].password;
+    bcrypt.compare(passwordInput, passwordHash, (err, res) => {
+      if (res) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    });
+
   });
 };
 

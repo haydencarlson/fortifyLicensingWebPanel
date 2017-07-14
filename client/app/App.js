@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { Link } from 'react-router';
 import { Router, Route, browserHistory } from 'react-router';
 import Authorization from './views/Authorization.js';
+import services from './services/index.js';
 import * as actions from './actions/index.js';
 
 class App extends Component {
@@ -10,7 +11,7 @@ class App extends Component {
   render() {
     return (
       <Router history={browserHistory}>
-      <Route path="/" component={Authorization}/>
+      <Route path="/" onEnter={services.checkIfLoggedIn()} component={Authorization}/>
       </Router>
     )
   };
@@ -18,7 +19,7 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return ({
-    currentTab: state.changeTab
+    currentUser: state.currentUser
   });
 };
 

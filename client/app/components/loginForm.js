@@ -32,7 +32,7 @@ class LoginForm extends Component {
     })
     .then((response) => {
       if (response.data.status) {
-        localStorage.setItem(token: response.data.token);
+        localStorage.setItem('token', response.data.token);
         toast.success(response.data.message, {
           autoClose: 4000,
           position: 'bottom-center'

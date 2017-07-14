@@ -26,21 +26,33 @@ class RegisterForm extends Component {
 
   handleFormSubmit = (e) => {
     e.preventDefault();
+
+    // Preserve this
     const that = this;
+
+    // Check that passwords match
     if (this.state.password === this.state.password_confirmation) {
+
+      // Post to registration route
       axios.post('http://localhost:3000/users', {
       email: this.state.email,
       password: this.state.password,
       password_confirmation: this.state.password_confirmation
       })
       .then((response) => {
+
+        // If our response is not false
         if (response.data.status) {
+
+          // Display success and show login
           toast.success(response.data.message, {
             autoClose: 4000,
             position: 'bottom-center'
           });
           that.handleClick();
         } else {
+
+          // Display error
           toast.success(response.data.message, {
             autoClose: 4000,
             positon: 'bottom-center'
@@ -48,7 +60,10 @@ class RegisterForm extends Component {
         }
       }).catch((error) => console.log(error));
     } else {
-      toast.success("Your passwords do not match", {autoClose: 4000});
+      toast.success("Your passwords do not match", {
+        autoClose: 4000,
+        position: 'bottom-center'
+      });
     }
   }
 

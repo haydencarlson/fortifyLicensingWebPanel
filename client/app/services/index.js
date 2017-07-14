@@ -1,10 +1,12 @@
 import { browserHistory } from 'react-router';
-
-export default {
-  checkIfLoggedIn: () => {
+import {connect} from 'react-redux';
+import * as actions from '../actions/index.js';
+import { store } from '../Index.js';
+const services = {
+  checkIfLoggedIn: (props) => {
     let token = localStorage.getItem('token');
-    if (token) {
-      browserHistory.push('/panel')
-    }
+    window.store.dispatch(actions.verifyUser(token));
   }
-}
+};
+
+export default services;

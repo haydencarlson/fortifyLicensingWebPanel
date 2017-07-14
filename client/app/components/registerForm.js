@@ -55,7 +55,7 @@ class RegisterForm extends Component {
           // Display error
           toast.success(response.data.message, {
             autoClose: 4000,
-            positon: 'bottom-center'
+            position: 'bottom-center'
           });
         }
       }).catch((error) => console.log(error));

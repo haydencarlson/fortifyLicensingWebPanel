@@ -2,13 +2,48 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../actions/index.js';
 import {toast} from 'react-toastify';
+import axios from 'axios';
 
 class LoginForm extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: ''
+    }
+  }
   handleJoinUs = () => {
     this.props.toggleRegisterForm(!this.props.registerFormToggled);
   }
 
+  handleEmailChange = (e) => {
+    this.setState({email: e.target.value});
+  }
+  handlePasswordChange = (e) => {
+    this.setState({password: e.target.value});
+  }
+
+  handleClick = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:3000/auth', {
+      email: this.state.email,
+      password: this.state.password
+    })
+    .then((response) => {
+      if (response.data.status) {
+        toast.success(response.data.message, {
+          autoClose: 4000,
+          position: 'bottom-center'
+        });
+      } else {
+        toast.success(response.data.message, {
+          autoClose: 4000,
+          position: 'bottom-center'
+        });
+      }
+    });
+  }
 
   render() {
     return (
@@ -24,14 +59,14 @@ class LoginForm extends Component {
       								 <form className="form" onSubmit={this.handleFormSubmit} acceptCharset="UTF-8" id="login-nav">
       										<div className="form-group">
       											 <label className="sr-only" htmlFor="exampleInputEmail2">Email address</label>
-      											 <input type="email" className="form-control" id="exampleInputEmail2" placeholder="Email address" required/>
+      											 <input type="email" onChange={this.handleEmailChange} value={this.state.email} className="form-control" id="exampleInputEmail2" placeholder="Email address" required/>
       										</div>
       										<div className="form-group">
       											 <label className="sr-only" htmlFor="exampleInputPassword2">Password</label>
-      											 <input type="password" className="form-control" id="exampleInputPassword2" placeholder="Password" required/>
+      											 <input type="password" onChange={this.handlePasswordChange} value={this.state.password} className="form-control" id="exampleInputPassword2" placeholder="Password" required/>
       										</div>
       										<div className="form-group">
-      											 <button type="submit" className="btn btn-primary btn-block">Sign in</button>
+      											 <button type="submit" onClick={this.handleClick} className="btn btn-primary btn-block">Sign in</button>
       										</div>
       										<div className="checkbox">
       											 <label>

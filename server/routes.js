@@ -18,4 +18,13 @@ router.post('/users', (req, res) => {
   });
 });
 
+router.post('/auth', (req, res) => {
+  req.API.signInUser(
+    req.body.email,
+    req.body.password
+  ).then((result) => {
+    res.send(result);
+  });
+});
+
 module.exports = router;

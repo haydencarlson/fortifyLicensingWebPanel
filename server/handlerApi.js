@@ -34,6 +34,25 @@ HandlerApi.prototype.signInUser = (email, password, password_confirmation) => {
       }
     });
   });
-}
+};
+
+HandlerApi.prototype.signInUser = (email, password) => {
+  return new Promise(function(resolve, reject) {
+    utils.checkIfUserAlreadyExists(email, knex, (response) => {
+      if (response.length) {
+        let passwordHash = response[0].password;
+        bcrypt.compare(password, passwordHash, function(err, res) {
+            if (res) {
+              resolve({status: 1, message: "You have been signed in"});
+            } else {
+              resolve({status: 0, message: "Email or password is incorrect"});
+            }
+        });
+      } else {
+        resolve({status: 0, message: "User does not exist"});
+      }
+    })
+  });
+};
 
 module.exports = HandlerApi;

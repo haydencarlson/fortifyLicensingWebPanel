@@ -13,7 +13,7 @@ export default class NavBar extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="#">Fortify Licensing Panel</a>
+            <a className="navbar-brand siteTitle" href="#">Fortify Licensing Panel</a>
           </div>
             <LoginForm/>
             <RegisterForm/>

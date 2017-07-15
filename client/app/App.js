@@ -17,11 +17,3 @@ class App extends Component {
     )
   };
 }
-
-function mapStateToProps(state) {
-  return ({
-    currentUser: state.currentUser
-  });
-};
-
-export default connect(mapStateToProps, null)(App);

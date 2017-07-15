@@ -18,6 +18,14 @@ router.post('/users', (req, res) => {
   });
 });
 
+router.post('/users/verify', (req, res) => {
+  req.API.verifyJwt(
+    req.body.jwt
+  ).then((result) => {
+    res.send(result);
+  });
+});
+
 router.post('/auth', (req, res) => {
   req.API.signInUser(
     req.body.email,

@@ -47,6 +47,18 @@ HandlerApi.prototype.signJwt = (email) => {
   });
 };
 
+HandlerApi.prototype.verifyJwt = (token) => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        resolve({status: 0})
+      } else {
+        resolve({status: 1});
+      }
+    });
+  });
+};
+
 HandlerApi.prototype.signInUser = (email, password, API) => {
   return new Promise((resolve, reject) => {
     utils.checkIfUserAlreadyExists(email, knex, (response) => {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
 import * as actions from '../actions/index.js';
 import {toast} from 'react-toastify';
 import axios from 'axios';
@@ -33,6 +34,7 @@ class LoginForm extends Component {
     .then((response) => {
       if (response.data.status) {
         localStorage.setItem('token', response.data.token);
+        browserHistory.push('/panel');
         toast.success(response.data.message, {
           autoClose: 4000,
           position: 'bottom-center'

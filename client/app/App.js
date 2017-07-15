@@ -11,9 +11,10 @@ class App extends Component {
   render() {
     return (
       <Router history={browserHistory}>
-      <Route path="/" onEnter={services.checkIfLoggedIn} component={Authorization}/>
-      <Route path="/panel" onEnter={services.checkIfLoggedIn} component={Panel}/>
+        <Route path="/" onEnter={services.checkIfLoggedIn} component={Authorization}/>
+        <Route path="/panel" onEnter={services.checkIfLoggedIn} component={Panel}/>
       </Router>
     )
   };
 }
+export default App;

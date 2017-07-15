@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import LoginForm from './loginForm.js';
-import RegisterForm from './registerForm.js';
-export default class NavBar extends Component {
+import LoginForm from '../containers/loginForm.js';
+import RegisterForm from '../containers/registerForm.js';
+class NavBar extends Component {
   render() {
     return (
       <nav className="navbar navbar-default navbar-inverse" role="navigation">
@@ -17,8 +17,10 @@ export default class NavBar extends Component {
           </div>
             <LoginForm/>
             <RegisterForm/>
-          </div>
-        </nav>
+        </div>
+      </nav>
     )
   }
 };
+
+  export default NavBar;

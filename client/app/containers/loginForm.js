@@ -48,13 +48,31 @@ class LoginForm extends Component {
     });
   }
 
+  isSignedIn = () => {
+    if (localStorage.getItem('token')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  loginOrLogout = () => {
+    if (localStorage.getItem('token')) {
+      return (
+        <a href="#" className="dropdown-toggle" id="loginDropdown"><b>Logout</b></a>
+      )
+    }
+    return (
+      <a href="#" className="dropdown-toggle" id="loginDropdown" data-toggle="dropdown"><b>Login</b> <span className="caret"></span></a>
+    )
+  }
   render() {
     return (
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul className="nav navbar-nav navbar-right">
-          <li><p className="navbar-text" onClick={() => this.handleClick()}>Already have an account?</p></li>
+          <li><p className="navbar-text" onClick={() => this.handleClick()}> {this.isSignedIn() ? 'You are signed in' : 'Already have an account?' }</p></li>
           <li className="dropdown">
-            <a href="#" className="dropdown-toggle" id="loginDropdown" data-toggle="dropdown"><b>Login</b> <span className="caret"></span></a>
+          {this.loginOrLogout()}
       			<ul id="login-dp" className="dropdown-menu">
       				<li>
       					 <div className="row">
@@ -105,4 +123,4 @@ const mapDispatchToProps = function (dispatch) {
   }
 }
 
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

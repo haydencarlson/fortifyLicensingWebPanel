@@ -205,7 +205,6 @@ class App extends React.Component {
         muiTheme = ThemeDefault;
         break;
     }
-
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
         {
@@ -218,7 +217,7 @@ class App extends React.Component {
 
               <LeftDrawer
                 navDrawerOpen={navDrawerOpen}
-                username="User Admin"
+                username="Hayden Carlson"
               />
 
               <div className="main-container" style={styles.container}>
@@ -284,12 +283,6 @@ class App extends React.Component {
                   <RadioButton
                     value="grayTheme"
                     label="Gray Theme"
-                    style={styles.radioButton}
-                    labelStyle={styles.radioButtonLabel}
-                  />
-                  <RadioButton
-                    value="darkBlueTheme"
-                    label="Dark Blue Theme"
                     style={styles.radioButton}
                     labelStyle={styles.radioButtonLabel}
                   />

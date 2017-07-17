@@ -112,6 +112,7 @@ class AuthPage extends React.Component { // eslint-disable-line react/prefer-sta
       fullName: this.state.register.fullName,
       email: this.state.register.email,
       password: this.state.register.password,
+      password_confirmation: this.state.register.confirmPassword
     };
 
     this.props.actions.register(payload);

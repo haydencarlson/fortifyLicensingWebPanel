@@ -100,8 +100,6 @@ Login.propTypes = {
   rememberMe: PropTypes.any.isRequired,
   onRememberMeChange: PropTypes.func.isRequired,
   onSignIn: PropTypes.func.isRequired,
-  onSignInFacebook: PropTypes.func.isRequired,
-  onSignInGoogle: PropTypes.func.isRequired,
   onForgotPassword: PropTypes.func.isRequired,
   onRegister: PropTypes.func.isRequired,
   errorMessage: PropTypes.string.isRequired,

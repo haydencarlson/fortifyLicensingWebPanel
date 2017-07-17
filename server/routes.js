@@ -27,11 +27,13 @@ router.post('/users/verify', (req, res) => {
 });
 
 router.post('/auth', (req, res) => {
+  debugger;
   req.API.signInUser(
     req.body.email,
     req.body.password,
     req.API
   ).then((result) => {
+    debugger;
     res.send(result);
   });
 });

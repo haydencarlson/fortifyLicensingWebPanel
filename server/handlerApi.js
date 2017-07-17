@@ -65,13 +65,10 @@ HandlerApi.prototype.signInUser = (email, password, API) => {
       if (response.length) {
         API.comparePassword(response, password).then((result) => {
           if (result) {
-            API.signJwt(email).then((jwt) => {
-              resolve({
-                status: 1,
-                message: "You have been signed in",
-                token: jwt
-              });
-            })
+            resolve({
+              status: 1,
+              message: "You have been signed in"
+            });
           } else {
             resolve({status: 0, message: "Email or Password incorrect"});
           }

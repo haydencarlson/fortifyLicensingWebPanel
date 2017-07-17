@@ -3,11 +3,11 @@ import { Link } from 'react-router';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FontIcon from 'material-ui/FontIcon';
-import { pink500, grey200, grey500 } from 'material-ui/styles/colors';
+import { pink500, grey200, grey500, cyan500, blue500 } from 'material-ui/styles/colors';
 import PageBase from '../PageBase/index.js';
 import Data from '../../data.js';
 
-const TablePage = () => {
+const TablePage = (props) => {
   const styles = {
     floatingActionButton: {
       margin: 0,
@@ -38,16 +38,15 @@ const TablePage = () => {
       },
     },
   };
-
   return (
     <PageBase
       title="Table Page"
-      navigation="Application / Table Page"
+      navigation="Application / Registered Applications"
       minHeight={466}
     >
 
-      <Link to="/form" >
-        <FloatingActionButton style={styles.floatingActionButton} iconStyle={{ backgroundColor: pink500 }}>
+      <Link to={{pathname: '/form', query: { endpoint: props.endpoint}}}>
+        <FloatingActionButton style={styles.floatingActionButton} iconStyle={{ backgroundColor: blue500 }}>
           <FontIcon className="material-icons">add</FontIcon>
         </FloatingActionButton>
       </Link>

@@ -62,6 +62,14 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/form',
+      name: 'formPage',
+      getComponent(location, cb) {
+        import('containers/FormPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

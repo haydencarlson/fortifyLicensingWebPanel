@@ -21,7 +21,7 @@ export class ApplicationPage extends React.Component { // eslint-disable-line re
             { name: 'description', content: 'Table of registered applications' },
           ]}
         />
-        <Table/>
+        <Table endpoint="/applications" />
       </div>
     );
   }

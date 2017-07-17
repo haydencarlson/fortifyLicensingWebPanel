@@ -29,6 +29,7 @@ class LeftDrawer extends React.Component {
       menusHasItems: true,
       openViewsHasItems: true,
       isNavigatingTabs: false,
+      avatarURl: '',
       isNavigatingMenu: false,
       currentTheme: theme.get(props.appStore.currentTheme),
       isMobileBrowser,
@@ -45,6 +46,9 @@ class LeftDrawer extends React.Component {
     this.animateRootMenu = this.animateRootMenu.bind(this);
   }
 
+  componentWillMount() {
+    this.fetchAvatarAsync();
+  }
   componentDidMount() {
     window.addEventListener('resize', this.updateMenuDimensions);
   }
@@ -270,6 +274,12 @@ class LeftDrawer extends React.Component {
     return className;
   }
 
+  async fetchAvatarAsync() {
+    let response = await fetch("https://randomuser.me/api/");
+    let data = await response.json();
+    this.setState({avatarUrl: data.results[0].picture.thumbnail});
+  }
+
   animateMenu(menu, child) {
     let className = ' hide';
 
@@ -286,12 +296,12 @@ class LeftDrawer extends React.Component {
 
     const styles = {
       logo: {
-        fontSize: 22,
+        fontSize: 18,
         color: currentTheme.logoColor,
         lineHeight: `${spacing.desktopKeylineIncrement}px`,
         fontWeight: typography.fontWeightLight,
         backgroundColor: currentTheme.logoBackgroundColor,
-        paddingLeft: 35,
+        paddingLeft: 20,
         height: 56,
       },
       headerItem: {
@@ -352,11 +362,11 @@ class LeftDrawer extends React.Component {
         open={navDrawerOpen}
       >
         <div style={styles.logo}>
-          Fortress Admin
+          Fortify Licensing Panel
         </div>
         <div style={styles.avatar.div}>
           <Avatar
-            src="http://www.material-ui.com/images/ok-128.jpg"
+            src={this.state.avatarUrl}
             size={50}
             style={styles.avatar.icon}
           />

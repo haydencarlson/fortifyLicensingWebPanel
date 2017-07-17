@@ -34,7 +34,7 @@ export function* appSaga() {
 }
 
 
-async function fetchAsync (email, password) {
+async function fetchSignInAsync (email, password) {
   var payload = {email: email ,password: password};
 
   var payloadData = ( "json", JSON.stringify( payload ) );
@@ -55,7 +55,7 @@ async function fetchAsync (email, password) {
 
 export function* fetchSignIn(action) {
   try {
-  const response = yield call(fetchAsync, action.payload.email, action.payload.password);
+  const response = yield call(fetchSignInAsync, action.payload.email, action.payload.password);
     if (response.status) {
       yield put({ type: AUTHENTICATED,
         user: {
@@ -76,42 +76,6 @@ export function* fetchSignIn(action) {
 
 export function* signIn() {
   yield fork(takeLatest, SIGN_IN, fetchSignIn);
-}
-
-export function* fetchSignInFacebook(action) {
-  try {
-    // here you can call your API in order to authenticate the user, for this demo just authenticate an user
-    yield put({ type: AUTHENTICATED,
-      user: {
-        name: 'John Smith',
-        email: action.payload.email,
-      },
-    });
-  } catch (e) {
-    yield put({ type: 'AUTHENTICATION_FAILED', message: e.message });
-  }
-}
-
-export function* signInFacebook() {
-  yield fork(takeLatest, SIGN_IN_FACEBOOK, fetchSignInFacebook);
-}
-
-export function* fetchSignInGoogle(action) {
-  try {
-    // here you can call your API in order to authenticate the user, for this demo just authenticate an user
-    yield put({ type: AUTHENTICATED,
-      user: {
-        name: 'John Smith',
-        email: action.payload.email,
-      },
-    });
-  } catch (e) {
-    yield put({ type: 'AUTHENTICATION_FAILED', message: e.message });
-  }
-}
-
-export function* signInGoogle() {
-  yield fork(takeLatest, SIGN_IN_GOOGLE, fetchSignInGoogle);
 }
 
 export function* fetchRegister(action) {
@@ -154,8 +118,6 @@ export function* resetPassword() {
 export default [
   appSaga,
   signIn,
-  signInFacebook,
-  signInGoogle,
   register,
   resetPassword,
 ];

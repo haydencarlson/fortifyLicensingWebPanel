@@ -40,7 +40,7 @@ class LoginForm extends Component {
           position: 'bottom-center'
         });
       } else {
-        toast.success(response.data.message, {
+        toast.error(response.data.message, {
           autoClose: 4000,
           position: 'bottom-center'
         });

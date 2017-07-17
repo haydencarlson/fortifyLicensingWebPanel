@@ -243,8 +243,6 @@ class AuthPage extends React.Component { // eslint-disable-line react/prefer-sta
                       password={this.state.login.password}
                       onPasswordChange={this.loginPasswordChanged}
                       onSignIn={this.signIn}
-                      onSignInFacebook={this.signInFacebook}
-                      onSignInGoogle={this.signInGoogle}
                       onForgotPassword={this.showForgotPassword}
                       onRegister={this.showRegister}
                       rememberMe={this.state.login.rememberMe}

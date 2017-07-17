@@ -48,8 +48,6 @@ class AuthPage extends React.Component { // eslint-disable-line react/prefer-sta
     this.forgotPasswordEmailChanged = this.forgotPasswordEmailChanged.bind(this);
 
     this.signIn = this.signIn.bind(this);
-    this.signInFacebook = this.signInFacebook.bind(this);
-    this.signInGoogle = this.signInGoogle.bind(this);
     this.loginEmailChanged = this.loginEmailChanged.bind(this);
     this.loginPasswordChanged = this.loginPasswordChanged.bind(this);
     this.loginRememberMeChanged = this.loginRememberMeChanged.bind(this);
@@ -74,20 +72,6 @@ class AuthPage extends React.Component { // eslint-disable-line react/prefer-sta
     };
 
     this.props.actions.signIn(payload);
-  }
-
-  signInFacebook() {
-    // validations goes here
-
-    const payload = {};
-    this.props.actions.signInFacebook(payload);
-  }
-
-  signInGoogle() {
-    // validations goes here
-
-    const payload = {};
-    this.props.actions.signInGoogle(payload);
   }
 
   loginEmailChanged(event) {

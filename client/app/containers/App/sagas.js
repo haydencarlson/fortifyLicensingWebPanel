@@ -1,6 +1,7 @@
 import { takeLatest } from 'redux-saga';
 import { call, put, fork } from 'redux-saga/effects';
 import mockMenuApi from '../../api/mockMenuApi';
+import axios from 'axios';
 import {
   SIGN_IN,
   SIGN_IN_FACEBOOK,
@@ -32,11 +33,30 @@ export function* appSaga() {
   yield fork(takeLatest, LOAD_MENU, fetchMenu);
 }
 
+
+async function fetchAsync (email, password) {
+  var payload = {email: email ,password: password};
+
+  var payloadData = ( "json", JSON.stringify( payload ) );
+
+  let response = await fetch("http://localhost:3000/auth", {
+    method: "POST",
+    body: payloadData,
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    })
+  });
+
+  let data = await response.json();
+
+  return data;
+}
+
 export function* fetchSignIn(action) {
   try {
-    // here you can call your API in order to authenticate the user
-    if (action.payload.email === 'demo@test.com' &&
-    action.payload.password === 'demo') {
+  const response = yield call(fetchAsync, action.payload.email, action.payload.password);
+    if (response.status) {
       yield put({ type: AUTHENTICATED,
         user: {
           name: 'John Smith',

@@ -48,20 +48,6 @@ export function signIn(payload) {
   };
 }
 
-export function signInFacebook(payload) {
-  return {
-    type: ActionTypes.SIGN_IN_FACEBOOK,
-    payload,
-  };
-}
-
-export function signInGoogle(payload) {
-  return {
-    type: ActionTypes.SIGN_IN_GOOGLE,
-    payload,
-  };
-}
-
 export function clearAuthenticationMessage() {
   return {
     type: ActionTypes.CLEAR_AUTHENTICATION_MESSAGE,

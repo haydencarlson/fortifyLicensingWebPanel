@@ -18,6 +18,16 @@ router.post('/users', (req, res) => {
   });
 });
 
+router.post('/applications', (req, res) => {
+  req.API.newApplication(
+    req.body.name,
+    req.body.description,
+    req.body.url
+  ).then((result) => {
+    res.send(result);
+  });
+});
+
 router.post('/users/verify', (req, res) => {
   req.API.verifyJwt(
     req.body.jwt

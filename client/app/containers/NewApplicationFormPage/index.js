@@ -10,6 +10,8 @@ import {browserHistory} from 'react-router';
 import { grey400 } from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
 import PageBase from '../../components/PageBase';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 class FormPage extends React.Component {
   constructor(props) {
@@ -17,15 +19,40 @@ class FormPage extends React.Component {
     console.log(props)
     this.state = {
       value: 1,
+      application_name: '',
+      description: '',
+      url: '',
+      loading: false
     };
 
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event, index, value) {
-    this.setState({
-      value,
-    });
+
+  handleSubmit(e) {
+    e.preventDefault();
+    if (
+      this.state.application_name&&
+      this.state.description &&
+      this.state.url
+    ) {
+      this.setState({loading: !this.state.loading});
+      axios.post('http://localhost:3000/applications', {
+        name: this.state.application_name,
+        description: this.state.description,
+        url: this.state.url
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+  }
+
+  handleChange = (e, state) => {
+    this.setState({[state]: e.target.value});
   }
 
   render() {
@@ -52,7 +79,8 @@ class FormPage extends React.Component {
       <PageBase
         title="New Application Form"
         navigation="Application / New Application Page"
-        minHeight={350}
+        minHeight={100}
+        loading={this.state.loading}
       >
         <form>
 
@@ -60,25 +88,33 @@ class FormPage extends React.Component {
             hintText="Project Name"
             floatingLabelText="Name of your Application"
             fullWidth
+            onChange={(e) => this.handleChange(e, 'application_name')}
           />
 
           <TextField
             hintText="Description"
             floatingLabelText="Description of your Application"
             fullWidth
+            onChange={(e) => this.handleChange(e, 'description')}
+          />
+
+          <TextField
+            hintText="URL"
+            floatingLabelText="URL location of your Application"
+            fullWidth
+            onChange={(e) => this.handleChange(e, 'url')}
           />
 
 
 
           <div style={styles.buttons}>
             <RaisedButton onClick={browserHistory.goBack} label="Cancel" />
-            <Link to="/table">
-              <RaisedButton
-                label="Save"
-                style={styles.saveButton}
-                primary
-              />
-            </Link>
+            <RaisedButton
+              label="Save"
+              style={styles.saveButton}
+              primary
+              onClick={(e) => this.handleSubmit(e)}
+            />
           </div>
         </form>
       </PageBase>

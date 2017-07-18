@@ -11,7 +11,7 @@ const initialState = fromJS({
   selectedMenuItem: null,
   selectedOpenedMenuIndex: 0,
   selectedOpenedMenuItem: null,
-  userIsAuthenticated: true,
+  userIsAuthenticated: false,
   isNavigatingTabs: false,
   isNavigatingOpenViews: false,
   currentTheme: 'darkTheme', // darkTheme, lightTheme, blueTheme, grayTheme, darkBlueTheme

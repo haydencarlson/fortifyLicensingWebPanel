@@ -57,6 +57,7 @@ export function* fetchSignIn(action) {
   try {
   const response = yield call(fetchSignInAsync, action.payload.email, action.payload.password);
     if (response.status) {
+      localStorage.setItem('token', response.token);
       yield put({ type: AUTHENTICATED,
         user: {
           name: 'John Smith',

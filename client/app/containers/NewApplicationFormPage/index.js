@@ -50,56 +50,25 @@ class FormPage extends React.Component {
 
     return (
       <PageBase
-        title="Form Page"
-        navigation="Application / Form Page"
+        title="New Application Form"
+        navigation="Application / New Application Page"
         minHeight={350}
       >
         <form>
 
           <TextField
-            hintText="First Name"
-            floatingLabelText="First Name"
+            hintText="Project Name"
+            floatingLabelText="Name of your Application"
             fullWidth
           />
 
           <TextField
-            hintText="Last Name"
-            floatingLabelText="Last Name"
+            hintText="Description"
+            floatingLabelText="Description of your Application"
             fullWidth
           />
 
-          <TextField
-            hintText="Address"
-            floatingLabelText="Address"
-            fullWidth
-          />
 
-          <SelectField
-            floatingLabelText="City"
-            value={this.state.value}
-            onChange={this.handleChange}
-            fullWidth
-          >
-            <MenuItem value={1} primaryText="New York" />
-            <MenuItem value={2} primaryText="London" />
-            <MenuItem value={3} primaryText="Paris" />
-            <MenuItem value={4} primaryText="Rome" />
-          </SelectField>
-
-          <DatePicker
-            hintText="Hire Date"
-            floatingLabelText="Hire Date"
-            fullWidth
-          />
-
-          <div style={styles.toggleDiv}>
-            <Toggle
-              label="Is Active"
-              labelStyle={styles.toggleLabel}
-            />
-          </div>
-
-          <Divider />
 
           <div style={styles.buttons}>
             <RaisedButton onClick={browserHistory.goBack} label="Cancel" />

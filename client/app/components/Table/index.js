@@ -45,7 +45,7 @@ const TablePage = (props) => {
       minHeight={466}
     >
 
-      <Link to={{pathname: '/form', query: { endpoint: props.endpoint}}}>
+      <Link to='/applications/new'>
         <FloatingActionButton style={styles.floatingActionButton} iconStyle={{ backgroundColor: blue500 }}>
           <FontIcon className="material-icons">add</FontIcon>
         </FloatingActionButton>

@@ -47,6 +47,11 @@ HandlerApi.prototype.signJwt = (email) => {
   });
 };
 
+HandlerApi.prototype.newApplication = (name, description, url) => {
+  return new Promise((resolve, reject) => {
+  });
+};
+
 HandlerApi.prototype.verifyJwt = (token) => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {

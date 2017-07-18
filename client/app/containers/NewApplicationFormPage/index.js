@@ -10,6 +10,8 @@ import {browserHistory} from 'react-router';
 import { grey400 } from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
 import PageBase from '../../components/PageBase';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 class FormPage extends React.Component {
   constructor(props) {
@@ -29,8 +31,26 @@ class FormPage extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state)
+    if (
+      this.state.application_name&&
+      this.state.description &&
+      this.state.url
+    ) {
+      this.setState({loading: !this.state.loading});
+      axios.post('http://localhost:3000/applications', {
+        name: this.state.application_name,
+        description: this.state.description,
+        url: this.state.url
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
   }
+
   handleChange = (e, state) => {
     this.setState({[state]: e.target.value});
   }

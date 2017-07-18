@@ -42,6 +42,34 @@ export default function createRoutes(store) {
           .catch(errorLoading);
       },
     }, {
+      path: '/applications',
+      name: 'applicationPage',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/ApplicationPage/reducer'),
+          import('containers/ApplicationPage/sagas'),
+          import('containers/ApplicationPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('applicationPage', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/applications/new',
+      name: 'newApplicationFormPage',
+      getComponent(location, cb) {
+        import('containers/NewApplicationFormPage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

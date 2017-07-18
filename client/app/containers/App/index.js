@@ -211,7 +211,7 @@ class App extends React.Component {
           this.props.appStore.userIsAuthenticated ? (
 
             <div className={this.props.appStore.currentTheme + (this.props.appStore.isBoxedLayout ? ' layout-boxed' : ' layout-fluid')}>
-            
+
               <Header
                 styles={styles.header}
                 handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer}

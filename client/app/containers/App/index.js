@@ -59,6 +59,13 @@ class App extends React.Component {
 
     // dispatch this action to load the menu
     this.props.actions.loadMenu();
+
+    this.seeIfSignedIn();
+  }
+
+  seeIfSignedIn = () => {
+    console.log(this.props.actions)
+    this.props.actions.authenticate();
   }
 
   componentDidMount() {

@@ -41,6 +41,12 @@ export function loadMenu() {
   };
 }
 
+export function authenticate() {
+  return {
+    type: ActionTypes.AUTHENTICATED,
+  };
+}
+
 export function signIn(payload) {
   return {
     type: ActionTypes.SIGN_IN,

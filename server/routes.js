@@ -28,7 +28,7 @@ router.post('/applications', (req, res) => {
   });
 });
 
-router.post('/users/verify', (req, res) => {
+router.post('/auth/verify', (req, res) => {
   req.API.verifyJwt(
     req.body.jwt
   ).then((result) => {

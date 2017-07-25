@@ -4,6 +4,7 @@ exports.up = function(knex, Promise) {
     t.increments('id');
     t.string('name');
     t.string('description');
+    t.boolean('premium');
     t.string('url');
     t.integer('user_id').unsigned().index().references('id').inTable('users');
   });

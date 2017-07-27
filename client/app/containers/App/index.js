@@ -64,7 +64,6 @@ class App extends React.Component {
   }
 
   seeIfSignedIn = () => {
-    console.log(this.props.actions)
     this.props.actions.authenticate();
   }
 

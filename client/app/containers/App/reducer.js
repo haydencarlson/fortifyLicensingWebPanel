@@ -73,7 +73,7 @@ function appReducer(state = initialState, action) {
         const openViews = state.get('openViews');
         const menuItem = menus[0];
         const openedMenuItem = openViews[0];
-
+        console.log('as', action)
         return state.set('userIsAuthenticated', true)
             .set('user', action.user)
             .set('authenticationErrorMessage', '')

@@ -13,6 +13,12 @@ export class Loading extends React.PureComponent { // eslint-disable-line react/
   render() {
     return (
       <div>
+        <div class="spinner-container">
+          <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+          </div>
+        </div>
       </div>
     );
   }

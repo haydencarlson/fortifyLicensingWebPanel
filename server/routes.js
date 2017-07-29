@@ -18,6 +18,11 @@ router.post('/users', (req, res) => {
   });
 });
 
+router.post('/auth/jwt', (req, res) => {
+  debugger;
+  res.send({data: "asd", status: 200});
+});
+
 router.post('/applications', (req, res) => {
   req.API.newApplication(
     req.body.name,

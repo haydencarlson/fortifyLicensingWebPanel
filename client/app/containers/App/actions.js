@@ -47,6 +47,12 @@ export function authenticate() {
   };
 }
 
+export function checkAuth() {
+  return {
+    type: ActionTypes.CHECK_AUTH
+  };
+}
+
 export function signIn(payload) {
   return {
     type: ActionTypes.SIGN_IN,

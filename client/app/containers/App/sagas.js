@@ -1,6 +1,7 @@
 import { takeLatest, takeEvery } from 'redux-saga';
 import { call, put, take, fork } from 'redux-saga/effects';
 import mockMenuApi from '../../api/mockMenuApi';
+import * as API from './api.js';
 import axios from 'axios';
 import {
   SIGN_IN,
@@ -95,7 +96,16 @@ export function* fetchRegister(action) {
 }
 
 export function checkJwt(action) {
-  return axios.get('https://jsonplaceholder.typicode.com/posts/1');
+  console.log(API.getAuthToken())
+  if (API.getAuthToken()) {
+    return axios.post('http://localhost:3000/auth/jwt', {
+      token: API.getAuthToken()
+    }).then(function(response) {
+      return response;
+    });
+  } else {
+    return false;
+  }
 }
 
 

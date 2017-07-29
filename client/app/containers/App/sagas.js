@@ -1,5 +1,5 @@
-import { takeLatest } from 'redux-saga';
-import { call, put, fork } from 'redux-saga/effects';
+import { takeLatest, takeEvery } from 'redux-saga';
+import { call, put, take, fork } from 'redux-saga/effects';
 import mockMenuApi from '../../api/mockMenuApi';
 import axios from 'axios';
 import {
@@ -11,6 +11,7 @@ import {
   AUTHENTICATED,
   AUTHENTICATION_FAILED,
   LOAD_MENU,
+  CHECK_AUTH,
   LOAD_MENU_SUCCESS,
 } from './constants';
 
@@ -93,6 +94,19 @@ export function* fetchRegister(action) {
   }
 }
 
+export function checkJwt(action) {
+  return axios.get('https://jsonplaceholder.typicode.com/posts/1');
+}
+
+
+export function *checkAuth() {
+  yield take(CHECK_AUTH);
+
+  const auth_response = yield call(checkJwt)
+
+  console.log(auth_response);
+}
+
 export function* register() {
   yield fork(takeLatest, REGISTER, fetchRegister);
 }
@@ -121,4 +135,5 @@ export default [
   signIn,
   register,
   resetPassword,
+  checkAuth
 ];

@@ -70,9 +70,7 @@ HandlerApi.prototype.verifyJwt = (token) => {
 
 HandlerApi.prototype.fetchUser = (uid) => {
   return new Promise(function(resolve, reject) {
-    debugger;
     utils.fetchUser(uid, function(response) {
-      debugger;
       resolve(response);
     });
   });
@@ -83,10 +81,8 @@ HandlerApi.prototype.signInUser = (email, password, API) => {
     utils.checkIfUserAlreadyExists(email, knex, (response) => {
       if (response.length) {
         API.comparePassword(response, password).then((result) => {
-          debugger;
           if (result) {
             API.signJwt(result.user.id).then((token) => {
-              debugger;
               resolve({
                 status: 1,
                 message: "You have been signed in",

@@ -23,9 +23,7 @@ router.post('/auth/jwt', (req, res) => {
     req.body.token
   ).then(function(response) {
     if (response.status) {
-      debugger;
       req.API.fetchUser(response.data.uid).then(function(response) {
-        debugger;
         res.send({status: 200, user: response})
       })
     } else {
@@ -50,7 +48,6 @@ router.post('/auth', (req, res) => {
     req.body.password,
     req.API
   ).then((result) => {
-    debugger;
     res.send(result);
   });
 });

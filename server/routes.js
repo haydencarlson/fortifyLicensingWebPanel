@@ -19,8 +19,11 @@ router.post('/users', (req, res) => {
 });
 
 router.post('/auth/jwt', (req, res) => {
-  debugger;
-  res.send({data: "asd", status: 200});
+  req.API.verifyJwt(
+    req.body.token
+  ).then(function(response) {
+    response.status ? res.send({status:200}) : res.send({status:400})
+  })
 });
 
 router.post('/applications', (req, res) => {

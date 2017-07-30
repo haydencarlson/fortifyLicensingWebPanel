@@ -113,14 +113,13 @@ export function *checkAuth() {
   yield take(CHECK_AUTH);
 
   const auth_response = yield call(checkJwt)
-
+  console.log(auth_response);
   if (auth_response.data && auth_response.data.status === 200) {
     yield put({type: 'app/AUTHENTICATED', payload: true})
   } else {
     yield put({type: 'app/AUTHENTICATION_FAILED', message: "Please login"})
   }
 
-  console.log(auth_response);
 }
 
 export function* register() {

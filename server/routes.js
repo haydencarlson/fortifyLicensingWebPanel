@@ -22,7 +22,15 @@ router.post('/auth/jwt', (req, res) => {
   req.API.verifyJwt(
     req.body.token
   ).then(function(response) {
-    response.status ? res.send({status:200}) : res.send({status:400})
+    if (response.status) {
+      debugger;
+      req.API.fetchUser(response.data.uid).then(function(response) {
+        debugger;
+        res.send({status: 200, user: response})
+      })
+    } else {
+      res.send({status: 0})
+    }
   })
 });
 
@@ -36,16 +44,7 @@ router.post('/applications', (req, res) => {
   });
 });
 
-router.post('/auth/verify', (req, res) => {
-  req.API.verifyJwt(
-    req.body.jwt
-  ).then((result) => {
-    res.send(result);
-  });
-});
-
 router.post('/auth', (req, res) => {
-  debugger;
   req.API.signInUser(
     req.body.email,
     req.body.password,

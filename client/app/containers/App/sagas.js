@@ -110,6 +110,7 @@ export function checkJwt(action) {
 
 
 export function *checkAuth() {
+  console.log('checking auth');
   yield take(CHECK_AUTH);
 
   const auth_response = yield call(checkJwt)

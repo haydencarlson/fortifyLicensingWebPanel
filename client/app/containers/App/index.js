@@ -60,8 +60,9 @@ class App extends React.Component {
 
     // dispatch this action to load the menu
     this.props.actions.loadMenu();
-
-    this.checkAuth();
+    if (!this.props.appStore.userIsAuthenticated) {
+      this.checkAuth();
+    }
   }
 
   checkAuth = () => {
@@ -69,6 +70,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.state)
     window.addEventListener('resize', this.updateContentDimensions);
   }
 

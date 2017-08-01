@@ -109,15 +109,17 @@ export function checkJwt(action) {
 }
 
 
-export function *checkAuth() {
-  console.log('checking auth');
+export function *checkAuth(dispatch) {
   yield take(CHECK_AUTH);
+  yield put({type: 'app/LOADING', payload: true})
 
   const auth_response = yield call(checkJwt)
-  console.log(auth_response);
+
   if (auth_response.data && auth_response.data.status === 200) {
+    yield put({type: 'app/LOADING', payload: false})
     yield put({type: 'app/AUTHENTICATED', payload: true})
   } else {
+    yield put({type: 'app/LOADING', payload: false})
     yield put({type: 'app/AUTHENTICATION_FAILED', message: "Please login"})
   }
 

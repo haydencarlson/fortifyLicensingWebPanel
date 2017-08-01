@@ -11,11 +11,6 @@ const makeSelectCurrentUser = () => createSelector(
   (globalState) => globalState.get('currentUser')
 );
 
-const makeSelectLoading = () => createSelector(
-  selectGlobal,
-  (globalState) => globalState.get('loading')
-);
-
 const makeSelectError = () => createSelector(
   selectGlobal,
   (globalState) => globalState.get('error')

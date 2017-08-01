@@ -170,6 +170,9 @@ function appReducer(state = initialState, action) {
           .set('selectedOpenedMenuIndex', openedIndex)
           .set('selectedOpenedMenuItem', itemOpenedFound);
       }
+
+    case ActionTypes.LOADING:
+      return state.set("loading", action.payload);
     case ActionTypes.SELECT_MENU_ITEM:
       {
         const menus = state.get('menus');

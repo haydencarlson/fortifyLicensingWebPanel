@@ -12,6 +12,7 @@
 export const DEFAULT_LOCALE = 'en';
 export const LOAD_MENU = 'app/LOAD_MENU';
 export const LOAD_MENU_SUCCESS = 'app/LOAD_MENU_SUCCESS';
+export const LOADING = 'app/LOADING';
 export const OPEN_VIEW = 'app/OPEN_VIEW';
 export const CLOSE_VIEW = 'app/CLOSE_VIEW';
 export const SELECT_MENU_ITEM = 'app/SELECT_MENU_ITEM';

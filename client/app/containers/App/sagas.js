@@ -93,6 +93,34 @@ export function* fetchRegister(action) {
   }
 }
 
+export function checkJwt(action) {
+  console.log(API.getAuthToken())
+  if (API.getAuthToken()) {
+    return axios.post('http://localhost:3000/auth/jwt', {
+      token: API.getAuthToken()
+    }).then(function(response) {
+      return response;
+    });
+  } else {
+    return false;
+  }
+}
+
+
+export function *checkAuth(dispatch) {
+  yield take(CHECK_AUTH);
+  yield put({type: 'app/LOADING', payload: true})
+
+  const auth_response = yield call(checkJwt)
+
+  if (auth_response.data && auth_response.data.status === 200) {
+    yield put({type: 'app/AUTHENTICATED', payload: true})
+  } else {
+    yield put({type: 'app/AUTHENTICATION_FAILED', message: "Please login"})
+  }
+
+}
+
 export function* register() {
   yield fork(takeLatest, REGISTER, fetchRegister);
 }

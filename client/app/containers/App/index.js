@@ -210,138 +210,144 @@ class App extends React.Component {
         muiTheme = ThemeDefault;
         break;
     }
-    return (
-      <MuiThemeProvider muiTheme={muiTheme}>
-        {
+      if (!this.props.appStore.loading) {
+        return (
+          <MuiThemeProvider muiTheme={muiTheme}>
+          {
 
-          this.props.appStore.userIsAuthenticated ? (
+            this.props.appStore.userIsAuthenticated ? (
 
-            <div className={this.props.appStore.currentTheme + (this.props.appStore.isBoxedLayout ? ' layout-boxed' : ' layout-fluid')}>
+              <div className={this.props.appStore.currentTheme + (this.props.appStore.isBoxedLayout ? ' layout-boxed' : ' layout-fluid')}>
 
               <Header
-                styles={styles.header}
-                handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer}
+              styles={styles.header}
+              handleChangeRequestNavDrawer={this.handleChangeRequestNavDrawer}
               />
 
               <LeftDrawer
-                navDrawerOpen={navDrawerOpen}
-                username="Hayden Carlson"
+              navDrawerOpen={navDrawerOpen}
+              username="Hayden Carlson"
               />
 
               <div className="main-container" style={styles.container}>
-                <ReactCSSTransitionGroup
-                  transitionName="transition-animation"
-                  transitionAppear
-                  transitionAppearTimeout={1500}
-                  transitionEnterTimeout={0}
-                  transitionLeave={false}
-                >
-                  {React.cloneElement(this.props.children, {
-                    key: path,
-                  })}
-                </ReactCSSTransitionGroup>
+              <ReactCSSTransitionGroup
+              transitionName="transition-animation"
+              transitionAppear
+              transitionAppearTimeout={1500}
+              transitionEnterTimeout={0}
+              transitionLeave={false}
+              >
+              {React.cloneElement(this.props.children, {
+                key: path,
+              })}
+              </ReactCSSTransitionGroup>
               </div>
 
               <Drawer
-                openSecondary
-                open={this.props.appStore.openSettingDrawer}
+              openSecondary
+              open={this.props.appStore.openSettingDrawer}
               >
 
-                <AppBar
-                  title="Settings"
-                  style={styles.settingDrawer}
-                  iconElementLeft={
-                    <IconButton onClick={this.closeSettingsDrawer}>
-                      <FontIcon className="material-icons">close</FontIcon>
-                    </IconButton>
-                  }
-                />
-                <h2
-                  style={styles.headerItem}
-                >
-                  THEME COLOR
-                </h2>
-                <RadioButtonGroup
-                  style={styles.themeOptions}
-                  name="themes"
-                  defaultSelected="darkTheme"
-                  ref={(selectedTheme) => {
-                    this.selectedTheme = selectedTheme;
-                  }}
-                  onChange={this.themeChanged}
-                >
-                  <RadioButton
-                    value="darkTheme"
-                    label="Dark Theme"
-                    style={styles.radioButton}
-                    labelStyle={styles.radioButtonLabel}
-                  />
-                  <RadioButton
-                    value="lightTheme"
-                    label="Light Theme"
-                    style={styles.radioButton}
-                    labelStyle={styles.radioButtonLabel}
-                  />
-                  <RadioButton
-                    value="blueTheme"
-                    label="Blue Theme"
-                    style={styles.radioButton}
-                    labelStyle={styles.radioButtonLabel}
-                  />
-                  <RadioButton
-                    value="grayTheme"
-                    label="Gray Theme"
-                    style={styles.radioButton}
-                    labelStyle={styles.radioButtonLabel}
-                  />
-                </RadioButtonGroup>
-                <h2
-                  style={styles.headerItem}
-                >
-                  TABS
-                </h2>
-                <Toggle
-                  labelPosition={'right'}
-                  style={styles.swithStyle}
-                  label="Show Header Tabs"
-                  labelStyle={styles.swithColor}
-                  toggled={this.props.appStore.showTabs}
-                  onToggle={this.showTabsChanged}
-                />
-                <h2
-                  style={styles.headerItem}
-                >
-                  OPEN VIEWS
-                </h2>
-                <Toggle
-                  labelPosition={'right'}
-                  style={styles.swithStyle}
-                  label="Show Open Views"
-                  labelStyle={styles.swithColor}
-                  toggled={this.props.appStore.showOpenViews}
-                  onToggle={this.openViewsChanged}
-                />
-                <h2
-                  style={styles.headerItem}
-                >
-                  LAYOUT
-                </h2>
-                <Toggle
-                  labelPosition={'right'}
-                  style={styles.swithStyle}
-                  label="Boxed"
-                  labelStyle={styles.swithColor}
-                  toggled={this.props.appStore.isBoxedLayout}
-                  onToggle={this.layoutChanged}
-                />
+              <AppBar
+              title="Settings"
+              style={styles.settingDrawer}
+              iconElementLeft={
+                <IconButton onClick={this.closeSettingsDrawer}>
+                <FontIcon className="material-icons">close</FontIcon>
+                </IconButton>
+              }
+              />
+              <h2
+              style={styles.headerItem}
+              >
+              THEME COLOR
+              </h2>
+              <RadioButtonGroup
+              style={styles.themeOptions}
+              name="themes"
+              defaultSelected="darkTheme"
+              ref={(selectedTheme) => {
+                this.selectedTheme = selectedTheme;
+              }}
+              onChange={this.themeChanged}
+              >
+              <RadioButton
+              value="darkTheme"
+              label="Dark Theme"
+              style={styles.radioButton}
+              labelStyle={styles.radioButtonLabel}
+              />
+              <RadioButton
+              value="lightTheme"
+              label="Light Theme"
+              style={styles.radioButton}
+              labelStyle={styles.radioButtonLabel}
+              />
+              <RadioButton
+              value="blueTheme"
+              label="Blue Theme"
+              style={styles.radioButton}
+              labelStyle={styles.radioButtonLabel}
+              />
+              <RadioButton
+              value="grayTheme"
+              label="Gray Theme"
+              style={styles.radioButton}
+              labelStyle={styles.radioButtonLabel}
+              />
+              </RadioButtonGroup>
+              <h2
+              style={styles.headerItem}
+              >
+              TABS
+              </h2>
+              <Toggle
+              labelPosition={'right'}
+              style={styles.swithStyle}
+              label="Show Header Tabs"
+              labelStyle={styles.swithColor}
+              toggled={this.props.appStore.showTabs}
+              onToggle={this.showTabsChanged}
+              />
+              <h2
+              style={styles.headerItem}
+              >
+              OPEN VIEWS
+              </h2>
+              <Toggle
+              labelPosition={'right'}
+              style={styles.swithStyle}
+              label="Show Open Views"
+              labelStyle={styles.swithColor}
+              toggled={this.props.appStore.showOpenViews}
+              onToggle={this.openViewsChanged}
+              />
+              <h2
+              style={styles.headerItem}
+              >
+              LAYOUT
+              </h2>
+              <Toggle
+              labelPosition={'right'}
+              style={styles.swithStyle}
+              label="Boxed"
+              labelStyle={styles.swithColor}
+              toggled={this.props.appStore.isBoxedLayout}
+              onToggle={this.layoutChanged}
+              />
               </Drawer>
-            </div>
-          ) : (
-            <Auth />
-          )
-        }
-      </MuiThemeProvider>
-    );
+              </div>
+            ) : (
+              <Auth />
+            )
+          }
+          </MuiThemeProvider>
+        );
+      } else {
+        return (
+          <Loading/>
+        )
+      }
   }
 }
 

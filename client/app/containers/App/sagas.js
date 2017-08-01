@@ -1,6 +1,7 @@
-import { takeLatest } from 'redux-saga';
-import { call, put, fork } from 'redux-saga/effects';
+import { takeLatest, takeEvery } from 'redux-saga';
+import { call, put, take, fork } from 'redux-saga/effects';
 import mockMenuApi from '../../api/mockMenuApi';
+import * as API from './api.js';
 import axios from 'axios';
 import {
   SIGN_IN,
@@ -11,6 +12,7 @@ import {
   AUTHENTICATED,
   AUTHENTICATION_FAILED,
   LOAD_MENU,
+  CHECK_AUTH,
   LOAD_MENU_SUCCESS,
 } from './constants';
 
@@ -149,4 +151,5 @@ export default [
   signIn,
   register,
   resetPassword,
+  checkAuth
 ];

@@ -68,6 +68,7 @@ function appReducer(state = initialState, action) {
 
     // Authentication process
     case ActionTypes.AUTHENTICATED:
+      console.log('hi')
       {
         const menus = state.get('menus');
         const openViews = state.get('openViews');

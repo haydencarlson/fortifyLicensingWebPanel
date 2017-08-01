@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Drawer from 'material-ui/Drawer';
+import Loading from '../Loading/index.js';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
@@ -59,15 +60,17 @@ class App extends React.Component {
 
     // dispatch this action to load the menu
     this.props.actions.loadMenu();
-
-    this.seeIfSignedIn();
+    if (!this.props.appStore.userIsAuthenticated) {
+      this.checkAuth();
+    }
   }
 
-  seeIfSignedIn = () => {
-    this.props.actions.authenticate();
+  checkAuth = () => {
+    this.props.actions.checkAuth();
   }
 
   componentDidMount() {
+    console.log(this.state)
     window.addEventListener('resize', this.updateContentDimensions);
   }
 

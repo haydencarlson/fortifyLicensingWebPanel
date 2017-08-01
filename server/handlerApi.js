@@ -38,10 +38,10 @@ HandlerApi.prototype.signUpUser = (email, password, password_confirmation) => {
   });
 };
 
-HandlerApi.prototype.signJwt = (email) => {
+HandlerApi.prototype.signJwt = (uid) => {
   return new Promise((resolve, reject) => {
     let token = jwt.sign({
-      data: email,
+      uid: uid,
     }, process.env.JWT_SECRET, { expiresIn: '5h'});
     resolve(token);
   });
@@ -52,17 +52,29 @@ HandlerApi.prototype.newApplication = (name, description, url) => {
   });
 };
 
+
+HandlerApi.prototype.decodeJwt = (token) => {
+
+}
 HandlerApi.prototype.verifyJwt = (token) => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         resolve({status: 0})
       } else {
-        resolve({status: 1});
+        resolve({status: 1, data: decoded});
       }
     });
   });
 };
+
+HandlerApi.prototype.fetchUser = (uid) => {
+  return new Promise(function(resolve, reject) {
+    utils.fetchUser(uid, function(response) {
+      resolve(response);
+    });
+  });
+}
 
 HandlerApi.prototype.signInUser = (email, password, API) => {
   return new Promise((resolve, reject) => {
@@ -70,7 +82,7 @@ HandlerApi.prototype.signInUser = (email, password, API) => {
       if (response.length) {
         API.comparePassword(response, password).then((result) => {
           if (result) {
-            API.signJwt(email).then((token) => {
+            API.signJwt(result.user.id).then((token) => {
               resolve({
                 status: 1,
                 message: "You have been signed in",
@@ -93,7 +105,7 @@ HandlerApi.prototype.comparePassword = (response, passwordInput) => {
     let passwordHash = response[0].password;
     bcrypt.compare(passwordInput, passwordHash, (err, res) => {
       if (res) {
-        resolve(true);
+        resolve({user: response[0]});
       } else {
         resolve(false);
       }

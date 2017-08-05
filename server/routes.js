@@ -13,8 +13,10 @@ router.post('/users', (req, res) => {
     req.body.email,
     req.body.password,
     req.body.passwordConfirmation,
-    req.body.fullName
+    req.body.fullName,
+    req.API
   ).then((result) => {
+    console.log('I have sent', result, 'back to client');
     res.send(result);
   });
 });

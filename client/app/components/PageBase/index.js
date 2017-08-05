@@ -13,7 +13,6 @@ class PageBase extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(this.props, 'here')
     if (nextProps.loading !== this.props.loading) {
       this.setState({
         loading: nextProps.loading,

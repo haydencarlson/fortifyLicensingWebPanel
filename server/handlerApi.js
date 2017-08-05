@@ -14,8 +14,7 @@ var knex = require('knex')({
 });
 var HandlerApi = function() {};
 
-HandlerApi.prototype.signUpUser = (email, password, passwordConfirmation, fullName) => {
-  debugger;
+HandlerApi.prototype.signUpUser = (email, password, passwordConfirmation, fullName, API) => {
   return new Promise(function(resolve, reject) {
     utils.checkIfUserAlreadyExists(email, knex, (response) => {
       if (response.length) {
@@ -29,12 +28,15 @@ HandlerApi.prototype.signUpUser = (email, password, passwordConfirmation, fullNa
           .returning(['fullName', 'email', 'id'])
           .insert({ email: email, password: hash, fullName: fullName})
           .then((response) => {
-            this.signJwt(response[0]).then(function() {
-
-            })
-            if (response) {
-              resolve({status: 1, message: "Account successfully created"});
-            }
+            API.signJwt(response[0]).then(function(token) {
+              debugger;
+              resolve({
+                status: 1,
+                message: "You have been signed in",
+                token: token,
+                user: response[0]
+              });
+            });
           });
         });
       } else {

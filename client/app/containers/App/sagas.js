@@ -71,8 +71,6 @@ async function fetchSignUpAsync (fullName, email, password, passwordConfirmation
   console.log("This is my response", response);
   let data = await response.json();
 
-  console.log(data, 'data here');
-
   return data;
 }
 
@@ -80,7 +78,7 @@ export function* fetchSignIn(action) {
   try {
   const response = yield call(fetchSignInAsync, action.payload.email, action.payload.password);
     if (response.status) {
-      localStorage.setItem('token', response.token);
+      localStorage.setItem('token', response.token.token);
       yield put({ type: AUTHENTICATED,
         user: {
           name: 'John Smith',
@@ -124,7 +122,6 @@ export function* fetchRegister(action) {
 }
 
 export function checkJwt(action) {
-  console.log(API.getAuthToken())
   if (API.getAuthToken()) {
     return axios.post('http://localhost:3000/auth/jwt', {
       token: API.getAuthToken()
@@ -142,9 +139,9 @@ export function *checkAuth(dispatch) {
   yield put({type: 'app/LOADING', payload: true})
 
   const auth_response = yield call(checkJwt);
-  const user = auth_response.data.user[0];
-
+  console.log("Auth response", auth_response);
   if (auth_response.data && auth_response.data.status === 200) {
+    const user = auth_response.data.user[0];
     yield put({type: 'app/LOADING', payload: false})
     yield put({type: 'app/AUTHENTICATED', payload: {user: user}});
   } else {

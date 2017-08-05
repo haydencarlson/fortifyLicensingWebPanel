@@ -48,11 +48,13 @@ HandlerApi.prototype.signUpUser = (email, password, passwordConfirmation, fullNa
 
 HandlerApi.prototype.signJwt = (user) => {
   return new Promise((resolve, reject) => {
+    debugger;
     let token = jwt.sign({
-      uid: user.id,
-      email: user.email,
-      fullName: user.fullName
+      uid: user.user.id,
+      email: user.user.email,
+      fullName: user.user.fullName
     }, process.env.JWT_SECRET, { expiresIn: '5h'});
+    debugger;
     resolve({token});
   });
 };
@@ -62,11 +64,9 @@ HandlerApi.prototype.newApplication = (name, description, url) => {
   });
 };
 
-
-HandlerApi.prototype.decodeJwt = (token) => {
-
-}
 HandlerApi.prototype.verifyJwt = (token) => {
+
+  console.log(token);
   return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
@@ -79,6 +79,7 @@ HandlerApi.prototype.verifyJwt = (token) => {
 };
 
 HandlerApi.prototype.fetchUser = (uid) => {
+  debugger;
   return new Promise(function(resolve, reject) {
     utils.fetchUser(uid, function(response) {
       resolve(response);
@@ -89,10 +90,13 @@ HandlerApi.prototype.fetchUser = (uid) => {
 HandlerApi.prototype.signInUser = (email, password, API) => {
   return new Promise((resolve, reject) => {
     utils.checkIfUserAlreadyExists(email, knex, (response) => {
+      debugger;
       if (response.length) {
         API.comparePassword(response, password).then((result) => {
+          debugger;
           if (result) {
             API.signJwt(result).then((token) => {
+              debugger;
               resolve({
                 status: 1,
                 message: "You have been signed in",

@@ -70,7 +70,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state)
     window.addEventListener('resize', this.updateContentDimensions);
   }
 

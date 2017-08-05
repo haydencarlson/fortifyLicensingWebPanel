@@ -68,15 +68,13 @@ function appReducer(state = initialState, action) {
 
     // Authentication process
     case ActionTypes.AUTHENTICATED:
-      console.log('hi')
       {
         const menus = state.get('menus');
         const openViews = state.get('openViews');
         const menuItem = menus[0];
         const openedMenuItem = openViews[0];
-        console.log('as', action)
         return state.set('userIsAuthenticated', true)
-            .set('user', action.user)
+            .set('user', action.payload.user)
             .set('authenticationErrorMessage', '')
             .set('selectedMenuIndex', 0)
             .set('selectedMenuItem', menuItem)

@@ -56,21 +56,22 @@ async function fetchSignInAsync (email, password) {
 }
 
 async function fetchSignUpAsync (fullName, email, password, passwordConfirmation) {
-  console.log(passwordConfirmation);
   var payload = {email, password, fullName, passwordConfirmation};
 
   var payloadData = ( "json", JSON.stringify( payload ) );
 
+  console.log('Awaiting post of new user');
   let response = await fetch("http://localhost:3000/users", {
     method: "POST",
     body: payloadData,
     headers: new Headers({
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      'Content-Type': 'application/json'
     })
   });
-
+  console.log("This is my response", response);
   let data = await response.json();
+
+  console.log(data, 'data here');
 
   return data;
 }
@@ -104,15 +105,19 @@ export function* signIn() {
 export function* fetchRegister(action) {
 
   try {
-    console.log("I'm about to make api registration call")
     const response = yield call(fetchSignUpAsync, action.payload.fullName, action.payload.email, action.payload.password, action.payload.password_confirmation);
+    if (response.status) {
+      localStorage.setItem('token', response.token.token);
+      yield put({ type: AUTHENTICATED,
+        user: {
+          name: response.user.fullName,
+          email: response.user.email,
+        },
+      });
+    } else {
+      yield put({ type: 'AUTHENTICATION_FAILED', message: e.message });
+    }
     // here you can call your API in order to register an user, for this demo just authenticate an user
-    // yield put({ type: AUTHENTICATED,
-    //   user: {
-    //     name: 'John Smith',
-    //     email: action.payload.email,
-    //   },
-    // });
   } catch (e) {
     yield put({ type: 'REGISTRATION_FAILED', message: e.message });
   }
@@ -136,11 +141,12 @@ export function *checkAuth(dispatch) {
   yield take(CHECK_AUTH);
   yield put({type: 'app/LOADING', payload: true})
 
-  const auth_response = yield call(checkJwt)
+  const auth_response = yield call(checkJwt);
+  const user = auth_response.data.user[0];
 
   if (auth_response.data && auth_response.data.status === 200) {
     yield put({type: 'app/LOADING', payload: false})
-    yield put({type: 'app/AUTHENTICATED', payload: true})
+    yield put({type: 'app/AUTHENTICATED', payload: {user: user}});
   } else {
     yield put({type: 'app/LOADING', payload: false})
     yield put({type: 'app/AUTHENTICATION_FAILED', message: "Please login"})

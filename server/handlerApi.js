@@ -14,17 +14,18 @@ var knex = require('knex')({
 });
 var HandlerApi = function() {};
 
-HandlerApi.prototype.signUpUser = (email, password, password_confirmation) => {
+HandlerApi.prototype.signUpUser = (email, password, passwordConfirmation, fullName) => {
+  debugger;
   return new Promise(function(resolve, reject) {
     utils.checkIfUserAlreadyExists(email, knex, (response) => {
       if (response.length) {
         resolve({status: 0, message: "Email already exists"});
-      } else if (password === password_confirmation) {
+      } else if (password === passwordConfirmation) {
         bcrypt.hash(password, saltRounds, (err, hash) => {
           if (err) {
             resolve({status: 0, message: "Error creating user"});
           }
-          knex('users').insert({ email: email, password: hash})
+          knex('users').insert({ email: email, password: hash, fullName: fullName})
           .then((response) => {
             if (response) {
               resolve({status: 1, message: "Account successfully created"});
@@ -38,12 +39,14 @@ HandlerApi.prototype.signUpUser = (email, password, password_confirmation) => {
   });
 };
 
-HandlerApi.prototype.signJwt = (uid) => {
+HandlerApi.prototype.signJwt = (user) => {
+  debugger;
   return new Promise((resolve, reject) => {
+    debugger;
     let token = jwt.sign({
       uid: uid,
     }, process.env.JWT_SECRET, { expiresIn: '5h'});
-    resolve(token);
+    resolve({token});
   });
 };
 
@@ -82,7 +85,7 @@ HandlerApi.prototype.signInUser = (email, password, API) => {
       if (response.length) {
         API.comparePassword(response, password).then((result) => {
           if (result) {
-            API.signJwt(result.user.id).then((token) => {
+            API.signJwt(result).then((token) => {
               resolve({
                 status: 1,
                 message: "You have been signed in",

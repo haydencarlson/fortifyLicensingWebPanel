@@ -55,6 +55,26 @@ async function fetchSignInAsync (email, password) {
   return data;
 }
 
+async function fetchSignUpAsync (fullName, email, password, passwordConfirmation) {
+  console.log(passwordConfirmation);
+  var payload = {email, password, fullName, passwordConfirmation};
+
+  var payloadData = ( "json", JSON.stringify( payload ) );
+
+  let response = await fetch("http://localhost:3000/users", {
+    method: "POST",
+    body: payloadData,
+    headers: new Headers({
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    })
+  });
+
+  let data = await response.json();
+
+  return data;
+}
+
 export function* fetchSignIn(action) {
   try {
   const response = yield call(fetchSignInAsync, action.payload.email, action.payload.password);
@@ -82,14 +102,17 @@ export function* signIn() {
 }
 
 export function* fetchRegister(action) {
+
   try {
+    console.log("I'm about to make api registration call")
+    const response = yield call(fetchSignUpAsync, action.payload.fullName, action.payload.email, action.payload.password, action.payload.password_confirmation);
     // here you can call your API in order to register an user, for this demo just authenticate an user
-    yield put({ type: AUTHENTICATED,
-      user: {
-        name: 'John Smith',
-        email: action.payload.email,
-      },
-    });
+    // yield put({ type: AUTHENTICATED,
+    //   user: {
+    //     name: 'John Smith',
+    //     email: action.payload.email,
+    //   },
+    // });
   } catch (e) {
     yield put({ type: 'REGISTRATION_FAILED', message: e.message });
   }

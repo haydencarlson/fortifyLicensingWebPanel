@@ -25,8 +25,13 @@ HandlerApi.prototype.signUpUser = (email, password, passwordConfirmation, fullNa
           if (err) {
             resolve({status: 0, message: "Error creating user"});
           }
-          knex('users').insert({ email: email, password: hash, fullName: fullName})
+          knex('users')
+          .returning(['fullName', 'email', 'id'])
+          .insert({ email: email, password: hash, fullName: fullName})
           .then((response) => {
+            this.signJwt(response[0]).then(function() {
+
+            })
             if (response) {
               resolve({status: 1, message: "Account successfully created"});
             }
@@ -40,11 +45,11 @@ HandlerApi.prototype.signUpUser = (email, password, passwordConfirmation, fullNa
 };
 
 HandlerApi.prototype.signJwt = (user) => {
-  debugger;
   return new Promise((resolve, reject) => {
-    debugger;
     let token = jwt.sign({
-      uid: uid,
+      uid: user.id,
+      email: user.email,
+      fullName: user.fullName
     }, process.env.JWT_SECRET, { expiresIn: '5h'});
     resolve({token});
   });

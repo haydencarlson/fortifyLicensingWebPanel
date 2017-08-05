@@ -12,7 +12,8 @@ router.post('/users', (req, res) => {
   req.API.signUpUser(
     req.body.email,
     req.body.password,
-    req.body.password_confirmation
+    req.body.passwordConfirmation,
+    req.body.fullName
   ).then((result) => {
     res.send(result);
   });

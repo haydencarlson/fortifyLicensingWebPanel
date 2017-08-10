@@ -28,13 +28,12 @@ HandlerApi.prototype.signUpUser = (email, password, passwordConfirmation, fullNa
           .returning(['fullName', 'email', 'id'])
           .insert({ email: email, password: hash, fullName: fullName})
           .then((response) => {
-            API.signJwt(response[0]).then(function(token) {
-              debugger;
+            API.signJwt(response[0]).then(function(data) {
               resolve({
                 status: 1,
                 message: "You have been signed in",
-                token: token,
-                user: response[0]
+                token: data.token,
+                user: data.user
               });
             });
           });
@@ -55,7 +54,7 @@ HandlerApi.prototype.signJwt = (user) => {
       fullName: user.user.fullName
     }, process.env.JWT_SECRET, { expiresIn: '5h'});
     debugger;
-    resolve({token});
+    resolve({token, user: user.user});
   });
 };
 
@@ -65,10 +64,10 @@ HandlerApi.prototype.newApplication = (name, description, url) => {
 };
 
 HandlerApi.prototype.verifyJwt = (token) => {
-
-  console.log(token);
+  debugger;
   return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      debugger;
       if (err) {
         resolve({status: 0})
       } else {
@@ -100,7 +99,8 @@ HandlerApi.prototype.signInUser = (email, password, API) => {
               resolve({
                 status: 1,
                 message: "You have been signed in",
-                token: token
+                token: token.token,
+                user: { user: token.user}
               });
             });
           } else {
@@ -121,6 +121,7 @@ HandlerApi.prototype.comparePassword = (response, passwordInput) => {
       if (res) {
         resolve({user: response[0]});
       } else {
+        debugger;
         resolve(false);
       }
     });

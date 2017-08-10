@@ -78,11 +78,13 @@ export function* fetchSignIn(action) {
   try {
   const response = yield call(fetchSignInAsync, action.payload.email, action.payload.password);
     if (response.status) {
-      localStorage.setItem('token', response.token.token);
+      yield call(setAuthToken, response.token)
+      console.log(response, 'response');
+      
       yield put({ type: AUTHENTICATED,
         user: {
-          name: 'John Smith',
-          email: action.payload.email,
+          name: response.user.user.fullName,
+          email: response.user.user.email,
         },
       });
     } else {
@@ -100,12 +102,15 @@ export function* signIn() {
   yield fork(takeLatest, SIGN_IN, fetchSignIn);
 }
 
+function setAuthToken(token) {
+  localStorage.setItem('token', token);
+}
 export function* fetchRegister(action) {
 
   try {
     const response = yield call(fetchSignUpAsync, action.payload.fullName, action.payload.email, action.payload.password, action.payload.password_confirmation);
     if (response.status) {
-      localStorage.setItem('token', response.token.token);
+      yield call(setAuthToken, response.token.token)
       yield put({ type: AUTHENTICATED,
         user: {
           name: response.user.fullName,
@@ -122,6 +127,7 @@ export function* fetchRegister(action) {
 }
 
 export function checkJwt(action) {
+  console.log(API.getAuthToken());
   if (API.getAuthToken()) {
     return axios.post('http://localhost:3000/auth/jwt', {
       token: API.getAuthToken()
@@ -141,9 +147,9 @@ export function *checkAuth(dispatch) {
   const auth_response = yield call(checkJwt);
   console.log("Auth response", auth_response);
   if (auth_response.data && auth_response.data.status === 200) {
-    const user = auth_response.data.user[0];
+    // const user = auth_response.data.user[0];
     yield put({type: 'app/LOADING', payload: false})
-    yield put({type: 'app/AUTHENTICATED', payload: {user: user}});
+    yield put({type: 'app/AUTHENTICATED', payload: {user: 'a'}});
   } else {
     yield put({type: 'app/LOADING', payload: false})
     yield put({type: 'app/AUTHENTICATION_FAILED', message: "Please login"})

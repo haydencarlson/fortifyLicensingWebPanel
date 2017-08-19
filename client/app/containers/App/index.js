@@ -60,9 +60,9 @@ class App extends React.Component {
 
     // dispatch this action to load the menu
     this.props.actions.loadMenu();
-    // if (localStorage.getItem('token')) {
-    //   this.checkAuth();
-    // }
+    if (localStorage.getItem('token')) {
+      this.checkAuth();
+    }
   }
 
   checkAuth = () => {

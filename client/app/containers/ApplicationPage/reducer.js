@@ -7,6 +7,7 @@
 import { fromJS } from 'immutable';
 import {
   DEFAULT_ACTION,
+  FETCH_APPLICATIONS
 } from './constants';
 
 const initialState = fromJS({});

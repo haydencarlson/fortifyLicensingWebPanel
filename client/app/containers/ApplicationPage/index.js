@@ -9,9 +9,12 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import makeSelectApplicationPage from './selectors';
+import * as actions from './actions';
 import Table from '../../components/Table/index.js';
 export class ApplicationPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-
+  componentWillMount() {
+    this.props.dispatch(actions.fetchApplications())
+  }
   render() {
     return (
       <div>

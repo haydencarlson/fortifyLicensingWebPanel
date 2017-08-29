@@ -44,7 +44,12 @@ router.post('/applications', (req, res) => {
     req.body.description,
     req.body.url
   ).then((result) => {
-    res.send(result);
+    debugger;
+    if (result) {
+      res.send({status:200});
+    } else {
+      res.send({status:400});
+    }
   });
 });
 

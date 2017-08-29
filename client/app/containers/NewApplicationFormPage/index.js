@@ -43,8 +43,11 @@ class FormPage extends React.Component {
         url: this.state.url
       })
       .then(function (response) {
-        console.log(response);
-      })
+        if (response.data.status === 200) {
+          this.setState({loading: !this.state.loading})
+          window.location.replace("http://localhost:8080/applications");
+        }
+      }.bind(this))
       .catch(function (error) {
         console.log(error);
       });

@@ -47,27 +47,34 @@ HandlerApi.prototype.signUpUser = (email, password, passwordConfirmation, fullNa
 
 HandlerApi.prototype.signJwt = (user) => {
   return new Promise((resolve, reject) => {
-    debugger;
     let token = jwt.sign({
       uid: user.user.id,
       email: user.user.email,
       fullName: user.user.fullName
     }, process.env.JWT_SECRET, { expiresIn: '5h'});
-    debugger;
     resolve({token, user: user.user});
   });
 };
 
 HandlerApi.prototype.newApplication = (name, description, url) => {
   return new Promise((resolve, reject) => {
+    if (name, description, url) {
+      knex('applications').insert({name, description, url}).then(function(response, err) {
+        debugger;
+        if (err) {
+          resolve(false);
+        }
+        if (response) {
+          resolve(true);
+        }
+      })
+    }
   });
 };
 
 HandlerApi.prototype.verifyJwt = (token) => {
-  debugger;
   return new Promise((resolve, reject) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      debugger;
       if (err) {
         resolve({status: 0})
       } else {
@@ -78,7 +85,6 @@ HandlerApi.prototype.verifyJwt = (token) => {
 };
 
 HandlerApi.prototype.fetchUser = (uid) => {
-  debugger;
   return new Promise(function(resolve, reject) {
     utils.fetchUser(uid, function(response) {
       resolve(response);

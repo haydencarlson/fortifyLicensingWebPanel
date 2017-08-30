@@ -16,6 +16,7 @@ var HandlerApi = function() {};
 
 HandlerApi.prototype.signUpUser = (email, password, passwordConfirmation, fullName, API) => {
   return new Promise(function(resolve, reject) {
+
     utils.checkIfUserAlreadyExists(email, knex, (response) => {
       if (response.length) {
         resolve({status: 0, message: "Email already exists"});
@@ -60,7 +61,6 @@ HandlerApi.prototype.newApplication = (name, description, url) => {
   return new Promise((resolve, reject) => {
     if (name, description, url) {
       knex('applications').insert({name, description, url}).then(function(response, err) {
-        debugger;
         if (err) {
           resolve(false);
         }
@@ -69,6 +69,18 @@ HandlerApi.prototype.newApplication = (name, description, url) => {
         }
       })
     }
+  });
+};
+
+HandlerApi.prototype.fetchApplications = (user_id, auth_token) => {
+  return new Promise((resolve, reject) => {
+    knex.select()
+      .table('applications')
+      // WHERE USER_ID IS USER_ID
+      .then(function(response) {
+
+        resolve(response);
+    });
   });
 };
 
@@ -95,13 +107,10 @@ HandlerApi.prototype.fetchUser = (uid) => {
 HandlerApi.prototype.signInUser = (email, password, API) => {
   return new Promise((resolve, reject) => {
     utils.checkIfUserAlreadyExists(email, knex, (response) => {
-      debugger;
       if (response.length) {
         API.comparePassword(response, password).then((result) => {
-          debugger;
           if (result) {
             API.signJwt(result).then((token) => {
-              debugger;
               resolve({
                 status: 1,
                 message: "You have been signed in",
@@ -127,7 +136,7 @@ HandlerApi.prototype.comparePassword = (response, passwordInput) => {
       if (res) {
         resolve({user: response[0]});
       } else {
-        debugger;
+
         resolve(false);
       }
     });

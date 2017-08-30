@@ -8,6 +8,7 @@ var knex = require('knex')({
   }
 });
 function checkIfUserAlreadyExists(email, knex, callback) {
+  debugger;
   knex('users').where({email: email})
     .then((response) => {
       callback(response);
@@ -15,6 +16,7 @@ function checkIfUserAlreadyExists(email, knex, callback) {
 }
 
 function fetchUser(uid, callback) {
+  debugger;
   knex('users').where({id: uid})
     .then((response) => {
       callback(response);

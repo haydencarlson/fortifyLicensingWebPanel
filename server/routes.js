@@ -22,14 +22,11 @@ router.post('/users', (req, res) => {
 });
 
 router.post('/auth/jwt', (req, res) => {
-  debugger;
   req.API.verifyJwt(
     req.body.token
   ).then(function(response) {
     if (response.status) {
-      debugger;
       req.API.fetchUser(response.data.uid).then(function(response) {
-        debugger;
         res.send({status: 200, user: response})
       })
     } else {
@@ -44,7 +41,19 @@ router.post('/applications', (req, res) => {
     req.body.description,
     req.body.url
   ).then((result) => {
-    debugger;
+    if (result) {
+      res.send({status:200});
+    } else {
+      res.send({status:400});
+    }
+  });
+});
+
+router.post('/applications/fetch', (req, res) => {
+  req.API.fetchApplications(
+    req.body.user_id,
+    req.body.token
+  ).then((result) => {
     if (result) {
       res.send({status:200});
     } else {
@@ -54,13 +63,11 @@ router.post('/applications', (req, res) => {
 });
 
 router.post('/auth', (req, res) => {
-  debugger;
   req.API.signInUser(
     req.body.email,
     req.body.password,
     req.API
   ).then((result) => {
-    debugger;
     res.send(result);
   });
 });

@@ -15,8 +15,9 @@ export function defaultAction() {
   };
 }
 
-export function fetchApplications() {
+export function fetchApplications(user_id) {
   return {
     type: FETCH_APPLICATIONS,
+    payload: user_id
   };
 }

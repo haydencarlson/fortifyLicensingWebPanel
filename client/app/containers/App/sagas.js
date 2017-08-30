@@ -80,7 +80,7 @@ export function* fetchSignIn(action) {
     if (response.status) {
       yield call(setAuthToken, response.token)
       console.log(response, 'response');
-      
+
       yield put({ type: AUTHENTICATED,
         user: {
           name: response.user.user.fullName,
@@ -145,11 +145,10 @@ export function *checkAuth(dispatch) {
   yield put({type: 'app/LOADING', payload: true})
 
   const auth_response = yield call(checkJwt);
-  console.log("Auth response", auth_response);
   if (auth_response.data && auth_response.data.status === 200) {
     // const user = auth_response.data.user[0];
     yield put({type: 'app/LOADING', payload: false})
-    yield put({type: 'app/AUTHENTICATED', payload: {user: 'a'}});
+    yield put({type: 'app/AUTHENTICATED', payload: auth_response.data.user[0]});
   } else {
     yield put({type: 'app/LOADING', payload: false})
     yield put({type: 'app/AUTHENTICATION_FAILED', message: "Please login"})

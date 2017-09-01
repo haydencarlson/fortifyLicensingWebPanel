@@ -62,12 +62,12 @@ const TablePage = (props) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {Data.tablePage.items.map((item) =>
+          {props.applications.map((item) =>
             <TableRow key={item.id}>
               <TableRowColumn style={styles.columns.id}>{item.id}</TableRowColumn>
               <TableRowColumn style={styles.columns.name}>{item.name}</TableRowColumn>
-              <TableRowColumn style={styles.columns.salary}>{item.salary}</TableRowColumn>
-              <TableRowColumn style={styles.columns.department}>{item.department}</TableRowColumn>
+              <TableRowColumn style={styles.columns.salary}>{item.description}</TableRowColumn>
+              <TableRowColumn style={styles.columns.department}>{item.url}</TableRowColumn>
               <TableRowColumn style={styles.columns.edit}>
                 <Link className="button" to="/form">
                   <FloatingActionButton

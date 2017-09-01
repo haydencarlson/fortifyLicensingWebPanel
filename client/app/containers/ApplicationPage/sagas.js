@@ -3,7 +3,8 @@ import { takeLatest, takeEvery } from 'redux-saga';
 import { call, put, take, fork } from 'redux-saga/effects';
 import axios from 'axios';
 import {
-  FETCH_APPLICATIONS
+  FETCH_APPLICATIONS,
+  USERS_APPLICATIONS
 } from './constants';
 
 
@@ -28,7 +29,12 @@ async function fetchApplications(action) {
 
 // Individual exports for testing
 export function* receiveFetchApplicationsAction() {
-  yield takeLatest(FETCH_APPLICATIONS, fetchApplications);
+
+  const request = yield take(FETCH_APPLICATIONS)
+
+  let response = yield call(fetchApplications, '')
+  yield put({type: USERS_APPLICATIONS, payload: response.result})
+
 }
 
 // All sagas to be loaded

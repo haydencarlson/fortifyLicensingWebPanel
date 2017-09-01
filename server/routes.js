@@ -55,7 +55,7 @@ router.post('/applications/fetch', (req, res) => {
     req.body.token
   ).then((result) => {
     if (result) {
-      res.send({status:200});
+      res.send({status:200, result: result});
     } else {
       res.send({status:400});
     }

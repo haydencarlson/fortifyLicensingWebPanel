@@ -213,6 +213,7 @@ class App extends React.Component {
         break;
     }
       if (!this.props.appStore.loading) {
+        console.log(this.props, 'ajsdijsajd')
         return (
           <MuiThemeProvider muiTheme={muiTheme}>
           {
@@ -228,7 +229,7 @@ class App extends React.Component {
 
               <LeftDrawer
               navDrawerOpen={navDrawerOpen}
-              username="Hayden Carlson"
+              username={this.props.appStore.user.fullName}
               />
 
               <div className="main-container" style={styles.container}>

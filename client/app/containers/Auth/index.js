@@ -8,6 +8,7 @@ import ThemeDefault from '../../themes/theme-default';
 import * as appActions from '../../containers/App/actions';
 import Login from '../../components/Auth/Login';
 import Register from '../../components/Auth/Register';
+import { ToastContainer, toast } from 'react-toastify';
 import ForgotPassword from '../../components/Auth/ForgotPassword';
 
 class AuthPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -193,10 +194,22 @@ class AuthPage extends React.Component { // eslint-disable-line react/prefer-sta
     });
   }
 
+  handleClickButton = () => {
+    toast.success("HOI")
+  }
   render() {
     return (
       <MuiThemeProvider muiTheme={ThemeDefault}>
         <div>
+        <ToastContainer
+          position="top-right"
+          type="default"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          pauseOnHover
+        />
           {
             this.state.showRegister ? (
               <div>

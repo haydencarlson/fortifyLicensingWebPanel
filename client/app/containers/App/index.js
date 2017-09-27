@@ -9,6 +9,7 @@ import Drawer from 'material-ui/Drawer';
 import Loading from '../Loading/index.js';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
+import { ToastContainer, toast } from 'react-toastify';
 import FontIcon from 'material-ui/FontIcon';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import Toggle from 'material-ui/Toggle';
@@ -230,6 +231,15 @@ class App extends React.Component {
               <LeftDrawer
               navDrawerOpen={navDrawerOpen}
               username={this.props.appStore.user.fullName}
+              />
+              <ToastContainer
+                position="top-right"
+                type="default"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                pauseOnHover
               />
 
               <div className="main-container" style={styles.container}>

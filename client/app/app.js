@@ -19,7 +19,7 @@ import { useScroll } from 'react-router-scroll';
 import 'sanitize.css/sanitize.css';
 import 'flexboxgrid/css/flexboxgrid.css';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-
+import 'react-toastify/dist/ReactToastify.min.css'
 // Import root app
 import App from 'containers/App';
 
@@ -37,6 +37,7 @@ import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line impor
 /* eslint-enable import/no-webpack-loader-syntax */
 
 import configureStore from './store';
+
 
 // Import i18n messages
 import { translationMessages } from './i18n';
